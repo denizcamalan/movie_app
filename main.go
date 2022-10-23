@@ -3,29 +3,10 @@ package main
 import (
 	"github.com/denizcamalan/movie_app/docs"
 	"github.com/denizcamalan/movie_app/router"
-	logs "github.com/sirupsen/logrus"
 	swgFiles "github.com/swaggo/files"
 	swgGin "github.com/swaggo/gin-swagger"
 )
 
-
-type App struct {
-	Name    string
-	Version string
-}
-
-// Run - sets up our application and starts the server.
-func (a *App) Run() error {
-	logs.SetFormatter(&logs.JSONFormatter{})
-	logs.WithFields(
-		logs.Fields{
-			"AppName":    a.Name,
-			"AppVersion": a.Version,
-		},
-	).Info("Setting up application")
-	
-	return nil
-}
 
 func main() {
 
@@ -48,12 +29,4 @@ func main() {
 	router.GET("/swagger/*any", swgGin.WrapHandler(swgFiles.Handler, url))
 	router.Run(":" + port)
 
-	app := &App{
-		Name:    "movie_app",
-		Version: "1.0.0",
-	}
-	if err := app.Run(); err != nil {
-		logs.Error("Failed to run application")
-		logs.Fatal(err)
-	}
 }
