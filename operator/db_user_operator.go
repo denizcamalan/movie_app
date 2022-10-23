@@ -82,10 +82,7 @@ func (r *RegisterModel) LoginCheck(username string, password string) (string,err
 
 func (r *RegisterModel) SaveUser(name,password string) (model.Users, error) {
 
-	r.user.Username = name
-	r.user.Password = password
-
-	if err := r.db.Model(r.user).Create(&r.user).Error ; err != nil {
+	if err := r.db.Model(r.user).Create(&model.Users{ Username: name, Password: password}).Error ; err != nil {
 		log.Println("SaveUser",err)
 		return r.user, err
 	}

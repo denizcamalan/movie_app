@@ -37,11 +37,7 @@ func NewMovieModel() (*MovieModel){
 // Add items to movie from products config
 func (mm *MovieModel) AddMovie(name,description,movie_type string) error{
 
-	mm.movie.Name = name
-	mm.movie.Description = description
-	mm.movie.MovieType = movie_type
-
-	if err := mm.db.Model(mm.movie).Create(&mm.movie).Error; err != nil {
+	if err := mm.db.Model(mm.movie).Create(&model.Movies{Name: name, Description: description,MovieType: movie_type}).Error; err != nil {
 		return err
 	}
 	log.Println("Data is added by database")
@@ -51,7 +47,7 @@ func (mm *MovieModel) AddMovie(name,description,movie_type string) error{
 // List all of the selected items into the movie
 func (mm *MovieModel) ListAll() ([]model.Movies, error) {
 
-	if err := mm.db.Model(mm.movie).Find(&mm.movie).Error; err != nil {
+	if err := mm.db.Model(mm.movie).Find(&mm.arr_movie).Error; err != nil {
 		return nil,err
 	}
 	
