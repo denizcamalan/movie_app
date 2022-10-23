@@ -63,7 +63,7 @@ func (mm *MovieModel) ListAll() ([]model.Movies, error) {
 // select item from config by item's id
 func (mm *MovieModel) SelectMovie(id uint) (model.Movies, error){
 
-	if err := mm.db.Model(mm.movie).Where("movie_id <> ?", id).Find(&mm.movie).Error; err != nil {
+	if err := mm.db.Model(mm.movie).Where("ID = ?", id).Find(&mm.movie).Error; err != nil {
 		return mm.movie,err
 	}
 	log.Println("Data is selected by database")
@@ -73,7 +73,7 @@ func (mm *MovieModel) SelectMovie(id uint) (model.Movies, error){
 // update movie table 
 func (mm *MovieModel) UpdateMovie(id uint, name, description, movie_type string) error {
 
-	if err := mm.db.Model(mm.movie).Model(&mm.movie).Where("movie_id = ?", id).
+	if err := mm.db.Model(mm.movie).Model(&mm.movie).Where("ID = ?", id).
 		Update(model.Movies{Name: name, Description: description,MovieType: movie_type}).Error; err != nil {
 		log.Println(err)
 		return err

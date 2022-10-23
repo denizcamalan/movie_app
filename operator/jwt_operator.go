@@ -55,7 +55,7 @@ func ExtractToken(c *gin.Context) string {
 	return ""
 }
 
-func ExtractTokenID(c *gin.Context) (int, error) {
+func ExtractTokenID(c *gin.Context) (uint, error) {
 
 	tokenString := ExtractToken(c)
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
@@ -70,13 +70,13 @@ func ExtractTokenID(c *gin.Context) (int, error) {
 	}
 	claims, ok := token.Claims.(jwt.MapClaims)
 	if ok && token.Valid {
-		uid, err := strconv.ParseInt(fmt.Sprintf("%.0f", claims["user_id"]), 10, 32)
+		uid, err := strconv.ParseUint(fmt.Sprintf("%.0f", claims["user_id"]), 10, 32)
 		if err != nil {
 			log.Println("extractedTokenId : ",err)
 			return 0, err
 		}
 		log.Println("extractedTokenId : ",uid)
-		return int(uid), nil
+		return uint(uid), nil
 	}
 	log.Println("extractedTokenId : return 0")
 	return 0, nil

@@ -30,7 +30,7 @@ type ApiController interface{
 type API struct{
 	movie 			model.Movies
 	ex_movie		model.ExMovies
-	user			model.User
+	user			model.Users
 	ex_user			model.ExUser
 }
 
@@ -90,7 +90,7 @@ func (api *API) Register(c *gin.Context){
 		return
 	}
 
-	c.JSON(http.StatusOK, model.Message{Message: "Registration Success !"})
+	c.JSON(http.StatusOK, model.Message{Message: "Registration Success! Username : "+ api.user.Username })
 
 }
 
@@ -259,20 +259,18 @@ func (api *API) DeleteDataByID(c *gin.Context) {
 func (api *API) CurrentUser(c *gin.Context){
 
 	user_id, err := operator.ExtractTokenID(c)
-	
+
 	if err != nil {
 		c.JSON(http.StatusBadRequest,  model.Message{Message: err.Error()})
 		return
 	}
 	
-	u,err := user_controller.GetUserByID(uint(user_id))
+	user,err := user_controller.GetUserByID(user_id)
 	
 	if err != nil {
 		c.JSON(http.StatusBadRequest, model.Message{Message: err.Error()})
 		return
 	}
 
-	api.user = u
-
-	c.JSON(http.StatusOK, model.Message{Message: "data : "+ u.Username})
+	c.JSON(http.StatusOK, model.Message{Message: "User : "+user.Username})
 }
