@@ -1,6 +1,8 @@
 package repo
 
-import "github.com/denizcamalan/movie_app/operator"
+import (
+	"github.com/denizcamalan/movie_app/operator"
+)
 
 type OperatorModel struct {
 }
