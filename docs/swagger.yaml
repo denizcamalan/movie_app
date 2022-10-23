@@ -1,0 +1,265 @@
+definitions:
+  model.ExMovies:
+    properties:
+      description:
+        type: string
+      movie_type:
+        type: string
+      name:
+        type: string
+    type: object
+  model.ExUser:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  model.Message:
+    properties:
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /admin/add:
+    post:
+      consumes:
+      - application/json
+      description: get {object}
+      parameters:
+      - description: Movies
+        in: body
+        name: Movies
+        required: true
+        schema:
+          $ref: '#/definitions/model.ExMovies'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ExMovies'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Message'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.ExMovies'
+      security:
+      - ApiKeyAuth: []
+      summary: create data Movies
+      tags:
+      - Movies
+  /admin/delete/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete Movies by ID
+      parameters:
+      - description: model.ExMovies
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Message'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.Message'
+      security:
+      - ApiKeyAuth: []
+      summary: delete a model.ExMovies item by ID
+      tags:
+      - Movies
+  /admin/get/{id}:
+    get:
+      consumes:
+      - application/json
+      description: get string by ID
+      parameters:
+      - description: model.ExMovies
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ExMovies'
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/model.Message'
+      security:
+      - ApiKeyAuth: []
+      summary: show Movies by ID
+      tags:
+      - Movies
+  /admin/update/{id}:
+    put:
+      consumes:
+      - application/json
+      description: update by json Movies
+      parameters:
+      - description: model.ExMovies
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Movies
+        in: body
+        name: Movies
+        required: true
+        schema:
+          $ref: '#/definitions/model.ExMovies'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ExMovies'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Message'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.Message'
+      security:
+      - ApiKeyAuth: []
+      summary: update Movies by ID
+      tags:
+      - Movies
+  /admin/user:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Message'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Message'
+        "442":
+          description: ""
+          schema:
+            $ref: '#/definitions/model.Message'
+      security:
+      - ApiKeyAuth: []
+      summary: get user in the model.User
+      tags:
+      - User
+  /list:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              items:
+                $ref: '#/definitions/model.ExMovies'
+              type: array
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.Message'
+      summary: get all items in the model.ExMovies list
+      tags:
+      - Movies
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: get {object}
+      parameters:
+      - description: Users
+        in: body
+        name: User
+        required: true
+        schema:
+          $ref: '#/definitions/model.ExUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Message'
+        "406":
+          description: Not Acceptable
+          schema:
+            $ref: '#/definitions/model.Message'
+      summary: create data User
+      tags:
+      - User
+  /register:
+    post:
+      consumes:
+      - application/json
+      description: get {object}
+      parameters:
+      - description: Users
+        in: body
+        name: User
+        required: true
+        schema:
+          $ref: '#/definitions/model.ExUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Message'
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/model.Message'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.Message'
+      summary: create data User
+      tags:
+      - User
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

@@ -1,0 +1,11 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: movie_archive
+      MYSQL_ROOT_PASSWORD: password
+    container_name: movie_app
+    ports:
+      - "3306:3306"
+    
