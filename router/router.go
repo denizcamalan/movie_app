@@ -12,7 +12,6 @@ func NewRoutes() *gin.Engine {
 
 	router := gin.Default()
 	v1 := router.Group("/movie_archive")
-
 	RoutesPost(v1)
 
 	return router

@@ -1,12 +1,12 @@
 package controller
 
 import (
-	"log"
 	"net/http"
 	"strconv"
 
+	log "github.com/siruspen/logrus"
+
 	"github.com/denizcamalan/movie_app/model"
-	"github.com/denizcamalan/movie_app/operator"
 	"github.com/denizcamalan/movie_app/repo"
 	"github.com/gin-gonic/gin"
 )
@@ -14,6 +14,7 @@ import (
 var (
 	movie_controller = repo.NewOperatorModel().DB_Operator()
 	user_controller = repo.NewOperatorModel().Register_Operator()
+	jwt_controller = repo.NewOperatorModel().JWT_Operator()
 )
 
 type ApiController interface{
@@ -51,7 +52,7 @@ func (api *API) Login(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, model.Message{Message: err.Error()})
 		return
 	}
-
+	
 	api.user.Username = api.ex_user.Username
 	api.user.Password = api.ex_user.Password
 
@@ -90,7 +91,7 @@ func (api *API) Register(c *gin.Context){
 		return
 	}
 
-	c.JSON(http.StatusOK, model.Message{Message: "Registration Success! Username : "+ api.user.Username })
+	c.JSON(http.StatusOK, model.Message{Message: "Registration Success!" })
 
 }
 
@@ -162,7 +163,7 @@ func (api *API) GetDataById(c *gin.Context) {
 
 	intID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {	
-		log.Println(err)
+		log.Error(err)
 		return
 	}
 
@@ -233,7 +234,7 @@ func (api *API) DeleteDataByID(c *gin.Context) {
 
 	intID, err := strconv.Atoi(c.Param("id"))
 	if err != nil {	
-		log.Println(err)
+		log.Error(err)
 		return
 	}
 
@@ -258,7 +259,7 @@ func (api *API) DeleteDataByID(c *gin.Context) {
 // @Router /admin/user [get]
 func (api *API) CurrentUser(c *gin.Context){
 
-	user_id, err := operator.ExtractTokenID(c)
+	user_id, err := jwt_controller.ExtractTokenID(c)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest,  model.Message{Message: err.Error()})

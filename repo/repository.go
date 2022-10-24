@@ -11,10 +11,15 @@ func NewOperatorModel() *OperatorModel {
 	var model OperatorModel
 	return &model
 }
+
 func (*OperatorModel) DB_Operator() operator.MovieModelMeneger {
 	return operator.NewMovieModel()
 }
 
 func (*OperatorModel) Register_Operator() operator.RegisterManager {
 	return operator.NewRegiterModel()
+}
+
+func (*OperatorModel) JWT_Operator() operator.JWTManager {
+	return operator.NewJWTModel()
 }

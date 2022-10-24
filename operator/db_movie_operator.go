@@ -1,13 +1,14 @@
 package operator
 
 import (
-	"log"
+	log "github.com/siruspen/logrus"
 
 	"github.com/denizcamalan/movie_app/config"
 	"github.com/denizcamalan/movie_app/model"
 	"github.com/jinzhu/gorm"
 )
 
+var db = config.DB_Connect()
 type MovieModelMeneger interface{
 	ListAll() ([]model.Movies, error)
 	AddMovie(name,description,movie_type string) error
@@ -24,12 +25,9 @@ type MovieModel struct{
 
 func NewMovieModel() (*MovieModel){
 	var models MovieModel
-	db, err := config.DB_Connect()
-	if err != nil {return nil}
-	log.Println("Connection error")
 	db.Debug().DropTableIfExists(&model.Movies{})
 	db.AutoMigrate(&model.Movies{})
-	log.Println("created" + db.NewScope(model.Movies{}).TableName())
+	log.Infof("created %s",db.NewScope(model.Movies{}).TableName())
 	models.db = db
 	return &models
 }
@@ -40,7 +38,7 @@ func (mm *MovieModel) AddMovie(name,description,movie_type string) error{
 	if err := mm.db.Model(mm.movie).Create(&model.Movies{Name: name, Description: description,MovieType: movie_type}).Error; err != nil {
 		return err
 	}
-	log.Println("Data is added by database")
+	log.Info("Data is added by database")
 	return nil
 }
 
@@ -51,7 +49,7 @@ func (mm *MovieModel) ListAll() ([]model.Movies, error) {
 		return nil,err
 	}
 	
-	log.Println("Data is listed by database")
+	log.Info("Data is listed by database")
 	return mm.arr_movie,nil
 
 }
@@ -62,7 +60,7 @@ func (mm *MovieModel) SelectMovie(id uint) (model.Movies, error){
 	if err := mm.db.Model(mm.movie).Where("ID = ?", id).Find(&mm.movie).Error; err != nil {
 		return mm.movie,err
 	}
-	log.Println("Data is selected by database")
+	log.Info("Data is selected by database")
 	return mm.movie,nil
 }
 
@@ -71,11 +69,11 @@ func (mm *MovieModel) UpdateMovie(id uint, name, description, movie_type string)
 
 	if err := mm.db.Model(mm.movie).Model(&mm.movie).Where("ID = ?", id).
 		Update(model.Movies{Name: name, Description: description,MovieType: movie_type}).Error; err != nil {
-		log.Println(err)
+		log.Error(err)
 		return err
 	}
 
-	log.Println("Data is updated by database")
+	log.Info("Data is updated by database")
 	return nil
 }
 
@@ -84,11 +82,11 @@ func (mm *MovieModel) DeleteMovie(id uint) error{
 
 	mm.movie.ID = id
 	if err := mm.db.Model(mm.movie).Delete(&mm.movie).Error; err != nil{
-		log.Println(err)
+		log.Error(err)
 		return err
 	}
 
-	log.Println("Data is deleted by database")
+	log.Info("Data is deleted by database")
 	return nil
 }
 
