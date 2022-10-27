@@ -18,7 +18,7 @@ docker-compese up -d
 
 5. Autherizion
 ```
-barrer {mytoken}
+Baerer {mytoken}
 ``` 
 
 6. Run Tests

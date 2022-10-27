@@ -17,7 +17,7 @@ func (*OperatorModel) DB_Operator() operator.MovieModelMeneger {
 }
 
 func (*OperatorModel) Register_Operator() operator.RegisterManager {
-	return operator.NewRegiterModel()
+	return operator.NewRegisterModel()
 }
 
 func (*OperatorModel) JWT_Operator() operator.JWTManager {

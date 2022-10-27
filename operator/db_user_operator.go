@@ -25,7 +25,7 @@ type RegisterModel struct{
 	db		*gorm.DB
 }
 
-func NewRegiterModel() (*RegisterModel){
+func NewRegisterModel() (*RegisterModel){
 	var models RegisterModel
 	db.Debug().DropTableIfExists(&model.Users{})
 	db.AutoMigrate(&model.Users{})
