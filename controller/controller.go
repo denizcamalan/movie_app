@@ -35,8 +35,14 @@ type API struct{
 	ex_user			model.ExUser
 }
 
+func NewApiController() (*API){
+	var api API
+	return &api
+}
+
+
 // Login godoc
-// @Summary create data User
+// @Summary Login User
 // @Description get {object}
 // @Tags User
 // @Accept  json
@@ -58,7 +64,7 @@ func (api *API) Login(c *gin.Context) {
 
 	token, err := user_controller.LoginCheck(api.user.Username, api.user.Password)
 	if err != nil {
-		c.JSON(http.StatusNotAcceptable, model.Message{Message: "error : username or password is incorrect."})
+		c.JSON(http.StatusNotAcceptable, model.Message{Message: "username or password is incorrect."})
 		return
 	}
 
@@ -66,7 +72,7 @@ func (api *API) Login(c *gin.Context) {
 }
 
 // Register godoc
-// @Summary create data User
+// @Summary create User
 // @Description get {object}
 // @Tags User
 // @Accept  json
@@ -96,7 +102,7 @@ func (api *API) Register(c *gin.Context){
 }
 
 // listAll godoc
-// @Summary get all items in the model.ExMovies list
+// @Summary list all Movies
 // @Tags Movies
 // @Accept  json
 // @Produce json
@@ -115,7 +121,7 @@ func (api *API) GetAll(c *gin.Context) {
 }
 
 // AddData godoc
-// @Summary create data Movies
+// @Summary create Movie
 // @Description get {object}
 // @Tags Movies
 // @Accept  json
@@ -147,7 +153,7 @@ func (api *API) AddData(c *gin.Context) {
 }
 
 // getDataById godoc
-// @Summary show Movies by ID
+// @Summary get Movies by ID
 // @Description get string by ID
 // @Tags Movies
 // @Accept  json
@@ -218,7 +224,7 @@ func (api *API) UpdateData(c *gin.Context) {
 }
 
 // deleteDataByID godoc
-// @Summary delete a model.ExMovies item by ID
+// @Summary delete Movie by ID
 // @Description delete Movies by ID
 // @Tags Movies
 // @Accept  json
@@ -248,7 +254,7 @@ func (api *API) DeleteDataByID(c *gin.Context) {
 }
 
 // get user godoc
-// @Summary get user in the model.User
+// @Summary get Current User
 // @Tags User
 // @Accept  json
 // @Produce json
@@ -275,3 +281,4 @@ func (api *API) CurrentUser(c *gin.Context){
 
 	c.JSON(http.StatusOK, model.Message{Message: "User : "+user.Username})
 }
+

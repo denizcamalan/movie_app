@@ -12,8 +12,10 @@ func NewRoutes() *gin.Engine {
 
 	router := gin.Default()
 	v1 := router.Group("/movie_archive")
-	RoutesPost(v1)
 
+	v1.GET("/ping", Ping)
+	
+	RoutesPost(v1)
 	return router
 }
 
@@ -31,4 +33,10 @@ func RoutesPost(rg *gin.RouterGroup) {
 		secured.DELETE("/delete/:id",api_controller.DeleteDataByID)
 	}
 	
+}
+
+func Ping(c *gin.Context) {
+	c.JSON(200, gin.H{
+		"message": "pong",
+	})
 }
