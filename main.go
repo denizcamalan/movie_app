@@ -48,6 +48,7 @@ func main() {
 	// @securityDefinitions.apikey ApiKeyAuth
 	// @in header
 	// @name Authorization
+	// @description JWT Authorization header using the Bearer scheme. Example: \"Bearer {token}\"
 
 	router := router.NewRoutes()
 
