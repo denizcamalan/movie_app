@@ -28,3 +28,14 @@ go test ./...
 
 ![Screen Shot 2022-10-23 at 10 34 13 PM](https://user-images.githubusercontent.com/79871039/197587075-c435d8a9-24b6-4099-973b-98f9698d9c76.png)
 
+# Content
+
+• Fetch all records
+• Adding a record
+• Deleting a record
+• Record updating
+• JWT Auth system
+• UnitTest
+• Swagger documentation
+• Log structure
+
