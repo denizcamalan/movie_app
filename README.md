@@ -31,11 +31,18 @@ go test ./...
 # Content
 
 • Fetch all records
+
 • Adding a record
+
 • Deleting a record
+
 • Record updating
+
 • JWT Auth system
+
 • UnitTest
+
 • Swagger documentation
+
 • Log structure
 
